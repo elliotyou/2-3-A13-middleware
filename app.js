@@ -1,7 +1,17 @@
 // app.js
 const express = require('express')
+const dateFormat = require('dateformat')
 const app = express()
 const port = 3000
+
+app.use((req, res, next) => {
+  const now = new Date()
+  const timeStamp = dateFormat(now, 'yyyy-mm-dd HH:MM:ss')
+  const method = req.method
+  const url = req.url
+  console.log(`${timeStamp} | ${method} from '${url}'`)
+  next()
+})
 
 app.get('/', (req, res) => {
   res.send('列出全部 Todo')
