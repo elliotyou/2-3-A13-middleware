@@ -10,7 +10,7 @@ app.use((req, res, next) => {
   const method = req.method
   const url = req.url
 
-  res.on('close', () => {
+  res.on('finish', () => {
     const timeDiff = Date.now() - timeStart
     console.log(`${timeStampStart} | ${method} from ${url} | total time: ${timeDiff}ms`)
   })
