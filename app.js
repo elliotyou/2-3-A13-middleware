@@ -5,11 +5,16 @@ const app = express()
 const port = 3000
 
 app.use((req, res, next) => {
-  const now = new Date()
-  const timeStamp = dateFormat(now, 'yyyy-mm-dd HH:MM:ss')
+  const timeStart = Date.now()
+  const timeStampStart = dateFormat(timeStart, 'yyyy-mm-dd HH:MM:ss')
   const method = req.method
   const url = req.url
-  console.log(`${timeStamp} | ${method} from '${url}'`)
+
+  res.on('close', () => {
+    const timeDiff = Date.now() - timeStart
+    console.log(`${timeStampStart} | ${method} from ${url} | total time: ${timeDiff}ms`)
+  })
+
   next()
 })
 
